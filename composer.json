@@ -1,0 +1,7 @@
+{
+    "require": {
+        "nmred/kafka-php": "v0.2.0.8",
+        "psr/log": "^1.0",
+        "monolog/monolog": "^2.1"
+    }
+}
