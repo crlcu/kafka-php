@@ -25,8 +25,8 @@ $cachedRegistry = new CachedRegistry(
     new AvroObjectCacheAdapter()
 );
 
-$topic = 'example-topic';
-$group = 'example-group';
+$topic = 'customer';
+$group = 'dwp';
 
 $registry = new AvroSchemaRegistry($cachedRegistry);
 $recordSerializer = new RecordSerializer($cachedRegistry);
@@ -35,18 +35,16 @@ $recordSerializer = new RecordSerializer($cachedRegistry);
 //if no schema definition is defined, the appropriate version will be fetched form the registry
 $registry->addSchemaMappingForTopic(
     $topic,
-    new KafkaAvroSchema('example-topic-value' /*, 9, AvroSchema $definition */)
+    new KafkaAvroSchema('customer-value' /*, 9, AvroSchema $definition */)
 );
 
 $decoder = new AvroDecoder($registry, $recordSerializer);
 
 $consumer = KafkaConsumerBuilder::create()
-     ->withAdditionalConfig(
-        [
-            'compression.codec' => 'lz4',
-            'auto.commit.interval.ms' => 500
-        ]
-    )
+     ->withAdditionalConfig([
+        'compression.codec'         => 'lz4',
+        'auto.commit.interval.ms'   => 500
+    ])
     ->withDecoder($decoder)
     ->withAdditionalBroker('localhost:9092')
     ->withConsumerGroup($group)
@@ -59,6 +57,7 @@ $consumer->subscribe();
 while (true) {
     try {
         $message = $consumer->consume();
+        var_dump($message);
         // your business logic
         $consumer->commit($message);
     } catch (KafkaConsumerTimeoutException $e) {
