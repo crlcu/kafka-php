@@ -14,12 +14,15 @@ use Monolog\Logger;
 // // Now add some handlers
 // $logger->pushHandler(new StdoutHandler());
 
+$group = 'example-group';
+$topic = 'example-topic';
+
 $config = ConsumerConfig::getInstance();
 $config->setMetadataRefreshIntervalMs(10000);
 $config->setMetadataBrokerList('localhost:9092');
-$config->setGroupId('example-group');
+$config->setGroupId($group);
 $config->setBrokerVersion('1.0.0');
-$config->setTopics(['example-topic']);
+$config->setTopics([$topic]);
 $config->setOffsetReset('earliest');
 // if use ssl connect
 //$config->setSslLocalCert('/home/vagrant/code/kafka-php/ca-cert');

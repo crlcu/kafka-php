@@ -2,6 +2,9 @@
     "require": {
         "nmred/kafka-php": "v0.2.0.8",
         "psr/log": "^1.0",
-        "monolog/monolog": "^2.1"
+        "monolog/monolog": "^2.1",
+        "flix-tech/avro-serde-php": "~1.4",
+        "jobcloud/php-kafka-lib": "^1.0",
+        "jobcloud/messaging-lib": "^4.0"
     }
 }
